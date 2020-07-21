@@ -64,7 +64,11 @@ a.website{
     background-color: rgba(11, 35, 167, 0.575) !important;
 }
 @media only screen and (max-width: 1000px) {
-  .navtext{
-      color: black !important;
+        .navtext{
+            color: black !important;
+        }
   }
+
+  a{
+      cursor: pointer;
   }

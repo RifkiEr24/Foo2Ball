@@ -6,6 +6,7 @@ import {
   getTopScorerById,
   getClubById
 } from "./api.js";
+
 document.addEventListener("DOMContentLoaded", function () {
   // Activate sidebar nav
   const elems = document.querySelectorAll(".sidenav");
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
     };
-    xhttp.open("GET", "src/nav.html", true);
+    xhttp.open("GET", "nav.html", true);
     xhttp.send();
   }
 
@@ -55,11 +56,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     loadPage(page);
   } else if (path === "league.html") {
+    back(); 
     getLeagueById();
     getTopScorerById();
     const el = document.querySelectorAll('.tabs');
     M.Tabs.init(el);
   }else if(path == "club.html"){
+    back(); 
     getClubById();
   }
   
@@ -73,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (this.status == 200) {
           content.innerHTML = xhttp.responseText;
           devbutton();
+          back();
           if (page === "leaguelist") {
             league();
           } else if (page == "matches") {
@@ -89,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    xhttp.open("GET", "/src/pages/" + page + ".html", true);
+    xhttp.open("GET", "./pages/" + page + ".html", true);
     xhttp.send();
   };
 
@@ -128,5 +132,15 @@ document.addEventListener("DOMContentLoaded", function () {
 function devbutton() {
   const devbutton = document.querySelectorAll(".development").forEach(devbutton => {
     devbutton.setAttribute("onclick", "M.toast({html: 'This Feature is not available yet because this app is still  under development'})");
+  });
+}
+
+function back(){
+  document.querySelectorAll(".back").forEach(elm => {
+          
+    elm.addEventListener("click", () => {
+      // Muat konten halaman yang dipanggil
+      window.history.go(-1);
+    });
   });
 }

@@ -26,9 +26,11 @@ function getLeague(){
     .then(status)
     .then(json)
     .then(function(data) {
-     // Objek/array JavaScript dari response.json() masuk lewat data.
+    renderLeague(data);
+  })
+}
 
-      // Menyusun komponen card artikel secara dinamis
+const renderLeague = data =>{
       let leagueHTML = "";
       data.competitions.forEach(league => {
         leagueHTML += `
@@ -42,9 +44,7 @@ function getLeague(){
       </a>
             `;
       });
-      // Sisipkan komponen card ke dalam elemen dengan id #content
       document.getElementById("league").innerHTML = leagueHTML;
-  })
 }
 
 function getLeagueById(){
@@ -59,9 +59,12 @@ function getLeagueById(){
     .then(status)
     .then(json)
     .then(function(data) {
-     // Objek/array JavaScript dari response.json() masuk lewat data.
+        renderLeagueById(data);
+  })
 
-      // Menyusun komponen card artikel secara dinamis
+}
+
+const renderLeagueById = data => {
       let leagueHTML = "";
       console.log(data);
       document.getElementById("leaguename").innerHTML=data.competition.name;
@@ -70,7 +73,7 @@ function getLeagueById(){
         data.standings.forEach(league => {
             leagueHTML+=`   <h5 class="center-align">${league.group}</h5>`
             league.table.forEach(teams => {
-                crest=teams.team.crestUrl || "../../assets/img/notfound.jpg";
+               let crest=teams.team.crestUrl || "../../assets/img/notfound.jpg";
                 leagueHTML += `
                 <a href="./club.html?id=${teams.team.id}" class="collection-item avatar z-depth-1" style="border-radius:35px; margin:20px;">
                 <img src="${crest}" alt="" class="circle">
@@ -99,10 +102,8 @@ function getLeagueById(){
             `;
       });
     }
-    //   Sisipkan komponen card ke dalam elemen dengan id #content
+ 
       document.getElementById("standing").innerHTML = leagueHTML;
-  })
-
 }
 
 function getTopScorerById(){
@@ -117,25 +118,25 @@ function getTopScorerById(){
     .then(status)
     .then(json)
     .then(function(data) {
-     // Objek/array JavaScript dari response.json() masuk lewat data.
-
-      // Menyusun komponen card artikel secara dinamis
-      let scorersHTML = "";
-       data.scorers.forEach(scorer => {
-        scorersHTML += `
-        <a href="./player.html?id=${scorer.player.id}" class="collection-item avatar z-depth-1" style="border-radius:35px; margin:20px;">
-        <img src="../../src/assets/img/unknown.jpg" alt="" class="circle">
-        <span class="title"><b>${scorer.player.name}</b></span>
-        <p>${scorer.team.name}<br>
-           <b>${scorer.numberOfGoals} Goal</b>
-        </p>
-  
-      </a>
-            `;
-      });
-    //   Sisipkan komponen card ke dalam elemen dengan id #content
-      document.getElementById("topscorer").innerHTML = scorersHTML;
+     renderTopScorerById(data);
   })
+}
+
+const renderTopScorerById = data =>{
+    let scorersHTML = "";
+    data.scorers.forEach(scorer => {
+     scorersHTML += `
+     <a href="./player.html?id=${scorer.player.id}" class="collection-item avatar z-depth-1" style="border-radius:35px; margin:20px;">
+     <img src="../../src/assets/img/unknown.jpg" alt="" class="circle">
+     <span class="title"><b>${scorer.player.name}</b></span>
+     <p>${scorer.team.name}<br>
+        <b>${scorer.numberOfGoals} Goal</b>
+     </p>
+
+   </a>
+         `;
+   });
+   document.getElementById("topscorer").innerHTML = scorersHTML;
 }
 
 function getClubById(){
@@ -149,7 +150,12 @@ function getClubById(){
     })
     .then(status)
     .then(json)
-    .then(function(data) {
+    .then( data => {
+    renderClubByID(data);
+  })
+}
+
+const renderClubByID = data =>{
      // Objek/array JavaScript dari response.json() masuk lewat data.
      document.getElementById("club").innerHTML=data.name;
      document.getElementById("clubarea").innerHTML=data.area.name;
@@ -231,10 +237,7 @@ function getClubById(){
               </tbody>      
         </table>
             `;
-    //   });
-    // //   Sisipkan komponen card ke dalam elemen dengan id #content
       document.getElementById("clubcontent").innerHTML = clubHTML;
-  })
 }
 
 function getUpcomingMatch(){
@@ -246,26 +249,27 @@ function getUpcomingMatch(){
     })
     .then(status)
     .then(json)
-    .then(function(data) {
-     // Objek/array JavaScript dari response.json() masuk lewat data.
-
-      // Menyusun komponen card artikel secara dinamis
-      let leagueHTML = "";
-      data.matches.forEach(league => {
-        leagueHTML += `
-        <li class="collection-item avatar z-depth-1" style="border-radius:35px; margin:20px;">
-        <img src="${league.competition.area.ensignUrl}" alt="" class="circle">
-        <a href="./league.html?id=${league.competition.id}"><span class="title"><b>${league.competition.name}</b></span></a>
-        <p><a href="./club.html?id=${league.homeTeam.id}"><b>${league.homeTeam.name}</b></a> VS <a href="./club.html?id=${league.awayTeam.id}"><b> ${league.awayTeam.name}</b></a><br>
-            ${league.group}
-        </p>
-
-      </li>
-            `;
-      });
-      // Sisipkan komponen card ke dalam elemen dengan id #content
-      document.getElementById("upcomingmatch").innerHTML = leagueHTML;
+    .then( data => {
+     renderUpcomingMatch(data);
   })
+}
+
+const renderUpcomingMatch = data =>{
+    let leagueHTML = "";
+    data.matches.forEach(league => {
+      leagueHTML += `
+      <li class="collection-item avatar z-depth-1" style="border-radius:35px; margin:20px;">
+      <img src="${league.competition.area.ensignUrl}" alt="" class="circle">
+      <a href="./league.html?id=${league.competition.id}"><span class="title"><b>${league.competition.name}</b></span></a>
+      <p><a href="./club.html?id=${league.homeTeam.id}"><b>${league.homeTeam.name}</b></a> VS <a href="./club.html?id=${league.awayTeam.id}"><b> ${league.awayTeam.name}</b></a><br>
+          ${league.group}
+      </p>
+
+    </li>
+          `;
+    });
+    // Sisipkan komponen card ke dalam elemen dengan id #content
+    document.getElementById("upcomingmatch").innerHTML = leagueHTML;
 }
 
 function getRecentMatch(){
@@ -277,76 +281,76 @@ function getRecentMatch(){
     })
     .then(status)
     .then(json)
-    .then(function(data) {
-     // Objek/array JavaScript dari response.json() masuk lewat data.
-
-      // Menyusun komponen card artikel secara dinamis
-      let leagueHTML = "";
-      data.matches.slice(-20).forEach(league => {
-        leagueHTML += `
-        <div class="col m4 s12">
-            <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator" src="${league.competition.area.ensignUrl}">
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">${league.competition.name}<i
-                            class="material-icons right">more_vert</i></span>
-                    <p class="center-align"><b>${league.homeTeam.name}</b> <br>
-                        VS<br>
-                        <b>${league.awayTeam.name}</b></p>
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">Match Detail<i
-                            class="material-icons right">close</i></span>
-                            <!-- TEAM NAME -->
-                    <div class="row">
-                        <div class="col m6 s6">
-                            <p class="center-align">${league.homeTeam.name}</p>
-                        </div>
-                        <div class="col m6 s6">
-                            <p class="center-align">   ${league.awayTeam.name}</p>
-                        </div>
-                    </div>
-                    <!-- HALFTIME -->
-                    <div class="row">
-                        <div class="col m12 s12">
-                            <p class="center-align"><b>Half Time</b></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col m6 s6">
-                           <p class="center-align"> ${league.score.halfTime.homeTeam}</p>
-                        </div>
-                        <div class="col m6 s6">
-                            <p class="center-align">${league.score.halfTime.awayTeam}</p>
-                        </div>
-                    </div>
-                    <!-- FULLTIME -->
-                    <div class="row">
-                        <div class="col m12 s12">
-                            <p class="center-align"><b>Full Time</b></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col m6 s6">
-                            <p class="center-align">   ${league.score.fullTime.homeTeam}</p>
-                        </div>
-                        <div class="col m6 s6">
-                            <p class="center-align">    ${league.score.fullTime.awayTeam}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-            `;
-      });
-      // Sisipkan komponen card ke dalam elemen dengan id #content
-      document.getElementById("recentmatch").innerHTML = leagueHTML;
+    .then( data => {
+     renderRecentMatch(data);
   })
 }
+const renderRecentMatch =(data) => {
 
+    let leagueHTML = "";
+    data.matches.slice(-20).forEach(league => {
+      leagueHTML += `
+      <div class="col m4 s12">
+          <div class="card">
+              <div class="card-image waves-effect waves-block waves-light">
+                  <img class="activator" src="${league.competition.area.ensignUrl}">
+              </div>
+              <div class="card-content">
+                  <span class="card-title activator grey-text text-darken-4">${league.competition.name}<i
+                          class="material-icons right">more_vert</i></span>
+                  <p class="center-align"><b>${league.homeTeam.name}</b> <br>
+                      VS<br>
+                      <b>${league.awayTeam.name}</b></p>
+              </div>
+              <div class="card-reveal">
+                  <span class="card-title grey-text text-darken-4">Match Detail<i
+                          class="material-icons right">close</i></span>
+                          <!-- TEAM NAME -->
+                  <div class="row">
+                      <div class="col m6 s6">
+                          <p class="center-align">${league.homeTeam.name}</p>
+                      </div>
+                      <div class="col m6 s6">
+                          <p class="center-align">   ${league.awayTeam.name}</p>
+                      </div>
+                  </div>
+                  <!-- HALFTIME -->
+                  <div class="row">
+                      <div class="col m12 s12">
+                          <p class="center-align"><b>Half Time</b></p>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col m6 s6">
+                         <p class="center-align"> ${league.score.halfTime.homeTeam}</p>
+                      </div>
+                      <div class="col m6 s6">
+                          <p class="center-align">${league.score.halfTime.awayTeam}</p>
+                      </div>
+                  </div>
+                  <!-- FULLTIME -->
+                  <div class="row">
+                      <div class="col m12 s12">
+                          <p class="center-align"><b>Full Time</b></p>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col m6 s6">
+                          <p class="center-align">   ${league.score.fullTime.homeTeam}</p>
+                      </div>
+                      <div class="col m6 s6">
+                          <p class="center-align">    ${league.score.fullTime.awayTeam}</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+          `;
+    });
+    // Sisipkan komponen card ke dalam elemen dengan id #content
+    document.getElementById("recentmatch").innerHTML = leagueHTML;
+}
 export{
     getLeague,
     getUpcomingMatch,
