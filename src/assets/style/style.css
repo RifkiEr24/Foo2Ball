@@ -1,0 +1,70 @@
+html{
+    scroll-behavior: smooth;
+}
+.maincolor{
+    background-color: #39b54a;
+}
+.tabs .indicator {
+    background-color: #39b54a !important;
+} 
+.tabs .tab a:hover {
+    background-color:#a2ffaf !important;
+    /*Custom Color On Hover*/
+  }
+  
+.carousel .carousel-item {
+    width:300px !important;
+}
+.slides{
+   margin-top: -80px;
+}
+ul.indicators{
+    margin-bottom: 40px !important;
+}
+
+a{
+    color: unset !important;
+}
+a.website{
+    color: blue !important;
+}
+.center{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.card{
+    min-height: 350px;
+}
+.card-reveal p{
+    margin: 0 !important;
+}
+.break-word{
+    word-wrap: break-word;
+}
+.Goalkeeper{
+    background-color: rgba(231, 199, 19, 0.808);
+}
+.Defender{
+    background-color: rgba(29, 60, 235, 0.493);
+}
+.Midfielder{
+    background-color: rgba(21, 255, 0, 0.438);
+}
+.Attacker{
+    background-color: rgba(230, 8, 8, 0.493);
+}
+.Coach{
+    background-color: rgba(186, 8, 230, 0.493);
+}
+.radius-bottom{
+    border-radius: 0px 0px 70px 70px;
+}
+.CL{
+    background-color: rgba(11, 35, 167, 0.575) !important;
+}
+@media only screen and (max-width: 1000px) {
+  .navtext{
+      color: black !important;
+  }
+  }
